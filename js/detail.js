@@ -42,6 +42,29 @@ function displayQRCode(qrCode) {
         });
     }
 
+    // タイトルを表示
+    const titleText = document.getElementById('titleText');
+    if (qrCode.title) {
+        titleText.value = qrCode.title;
+    } else {
+        // 既存データでタイトルがない場合は自動生成
+        let autoTitle = qrCode.content;
+        if (isURL(qrCode.content)) {
+            try {
+                const url = new URL(qrCode.content);
+                autoTitle = url.hostname;
+            } catch {
+                autoTitle = qrCode.content.substring(0, 30);
+            }
+        } else {
+            autoTitle = qrCode.content.substring(0, 30);
+        }
+        if (qrCode.content.length > 30) {
+            autoTitle += '...';
+        }
+        titleText.value = autoTitle;
+    }
+
     // 内容を表示
     const contentText = document.getElementById('contentText');
     contentText.textContent = qrCode.content;
@@ -88,6 +111,33 @@ function displayQRCode(qrCode) {
 
 // イベントハンドラーの設定
 function setupEventHandlers(qrCode) {
+    // タイトル保存ボタン
+    const saveTitleBtn = document.getElementById('saveTitleBtn');
+    const titleText = document.getElementById('titleText');
+
+    saveTitleBtn.onclick = () => {
+        const title = titleText.value.trim();
+        if (!title) {
+            alert('タイトルを入力してください');
+            return;
+        }
+
+        const updated = storage.updateQRCode(qrCode.id, { title });
+
+        if (updated) {
+            const originalText = saveTitleBtn.textContent;
+            saveTitleBtn.textContent = '保存しました!';
+            saveTitleBtn.style.background = 'var(--success-color)';
+
+            setTimeout(() => {
+                saveTitleBtn.textContent = originalText;
+                saveTitleBtn.style.background = '';
+            }, 2000);
+        } else {
+            alert('タイトルの保存に失敗しました');
+        }
+    };
+
     // コピーボタン
     const copyBtn = document.getElementById('copyBtn');
     copyBtn.onclick = () => {

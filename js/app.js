@@ -63,8 +63,25 @@ class QRCodeStorage {
 
     // QRコードを追加
     addQRCode(content, location = null) {
+        // タイトルを自動生成（URLの場合はドメイン、それ以外は先頭30文字）
+        let title = content;
+        if (isURL(content)) {
+            try {
+                const url = new URL(content);
+                title = url.hostname;
+            } catch {
+                title = content.substring(0, 30);
+            }
+        } else {
+            title = content.substring(0, 30);
+        }
+        if (content.length > 30) {
+            title += '...';
+        }
+
         const qrCode = {
             id: Date.now().toString(),
+            title: title,
             content: content,
             createdAt: new Date().toISOString(),
             location: location,
@@ -223,21 +240,32 @@ function displayQRList() {
 
     if (listContainer) {
         listContainer.innerHTML = qrCodes.map(qr => {
-            const preview = qr.content.length > 50
-                ? qr.content.substring(0, 50) + '...'
-                : qr.content;
+            // 既存データでタイトルがない場合は内容から生成
+            let title = qr.title;
+            if (!title) {
+                if (isURL(qr.content)) {
+                    try {
+                        const url = new URL(qr.content);
+                        title = url.hostname;
+                    } catch {
+                        title = qr.content.substring(0, 30);
+                    }
+                } else {
+                    title = qr.content.substring(0, 30);
+                }
+                if (qr.content.length > 30) {
+                    title += '...';
+                }
+            }
 
             const locationText = qr.location
-                ? `📍 ${qr.location.latitude.toFixed(6)}, ${qr.location.longitude.toFixed(6)}`
-                : '位置情報なし';
+                ? `📍 ${qr.location.latitude.toFixed(4)}°, ${qr.location.longitude.toFixed(4)}°`
+                : '📍 位置情報なし';
 
             return `
                 <a href="detail.html?id=${qr.id}" class="qr-item">
-                    <div class="qr-thumbnail">
-                        <div id="qr-thumb-${qr.id}"></div>
-                    </div>
                     <div class="qr-info">
-                        <div class="qr-content">${escapeHtml(preview)}</div>
+                        <div class="qr-title">${escapeHtml(title)}</div>
                         <div class="qr-meta">
                             <span>📅 ${formatDate(qr.createdAt)}</span>
                             <span>${locationText}</span>
@@ -246,21 +274,6 @@ function displayQRList() {
                 </a>
             `;
         }).join('');
-
-        // QRコードのサムネイルを生成
-        qrCodes.forEach(qr => {
-            const thumbElement = document.getElementById(`qr-thumb-${qr.id}`);
-            if (thumbElement && typeof QRCode !== 'undefined') {
-                new QRCode(thumbElement, {
-                    text: qr.content,
-                    width: 80,
-                    height: 80,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.M
-                });
-            }
-        });
     }
 }
 
