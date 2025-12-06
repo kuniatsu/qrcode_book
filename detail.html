@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコード詳細 - QRコードブックマーク</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">← 戻る</a>
+            <h1>QRコード詳細</h1>
+        </header>
+
+        <main class="detail-main">
+            <div class="qr-display" id="qrDisplay">
+                <!-- QRコードの画像がここに表示されます -->
+            </div>
+
+            <div class="detail-info">
+                <div class="info-section">
+                    <h3>内容</h3>
+                    <div class="content-box" id="qrContent">
+                        <p id="contentText"></p>
+                        <button id="copyBtn" class="btn btn-small">コピー</button>
+                        <button id="openBtn" class="btn btn-small" style="display: none;">開く</button>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3>登録日時</h3>
+                    <p id="createdAt"></p>
+                </div>
+
+                <div class="info-section">
+                    <h3>位置情報</h3>
+                    <p id="locationInfo">位置情報なし</p>
+                    <div id="mapContainer" style="display: none;">
+                        <a id="mapLink" target="_blank" class="btn btn-small">地図で表示</a>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3>メモ</h3>
+                    <textarea id="memoText" placeholder="メモを入力..."></textarea>
+                    <button id="saveMemoBtn" class="btn btn-primary">メモを保存</button>
+                </div>
+
+                <div class="actions">
+                    <button id="deleteBtn" class="btn btn-danger">削除</button>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>ホーム</span>
+            </a>
+            <a href="camera.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>カメラ</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6m8.66-15.66l-4.24 4.24m-4.24 4.24l-4.24 4.24M23 12h-6m-6 0H1m20.66 8.66l-4.24-4.24m-4.24-4.24l-4.24-4.24"></path>
+                </svg>
+                <span>設定</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/detail.js"></script>
+</body>
+</html>

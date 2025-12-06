@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定 - QRコードブックマーク</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>設定</h1>
+        </header>
+
+        <main class="settings-main">
+            <div class="settings-section">
+                <h3>位置情報</h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="locationToggle" checked>
+                        <span>QRコードスキャン時に位置情報を保存する</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>表示設定</h3>
+                <div class="setting-item">
+                    <label>
+                        <span>1ページあたりの表示件数</span>
+                        <select id="itemsPerPage">
+                            <option value="10">10件</option>
+                            <option value="20" selected>20件</option>
+                            <option value="50">50件</option>
+                            <option value="100">100件</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>データ管理</h3>
+                <div class="setting-item">
+                    <button id="exportBtn" class="btn btn-primary">データをエクスポート</button>
+                    <p class="setting-description">すべてのQRコードデータをJSONファイルとしてダウンロードします</p>
+                </div>
+                <div class="setting-item">
+                    <button id="importBtn" class="btn btn-secondary">データをインポート</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <p class="setting-description">以前エクスポートしたJSONファイルからデータを復元します</p>
+                </div>
+                <div class="setting-item">
+                    <button id="deleteAllBtn" class="btn btn-danger">すべてのデータを削除</button>
+                    <p class="setting-description">すべてのQRコードデータを削除します（この操作は取り消せません）</p>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>統計情報</h3>
+                <div class="stats">
+                    <p>登録済みQRコード数: <span id="totalQRs">0</span></p>
+                    <p>使用中のストレージ: <span id="storageUsed">0</span> KB</p>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>アプリについて</h3>
+                <p>QRコードブックマーク v1.0.0</p>
+                <p>QRコードをスキャンして保存・管理するWebアプリです</p>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>ホーム</span>
+            </a>
+            <a href="camera.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>カメラ</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6m8.66-15.66l-4.24 4.24m-4.24 4.24l-4.24 4.24M23 12h-6m-6 0H1m20.66 8.66l-4.24-4.24m-4.24-4.24l-4.24-4.24"></path>
+                </svg>
+                <span>設定</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
